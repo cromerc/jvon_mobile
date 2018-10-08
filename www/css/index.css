@@ -1,0 +1,142 @@
+html {
+    height: 100%;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-rendering: optimizeLegibility;
+    word-wrap: break-word;
+}
+
+body {
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+.main_table {
+	width: 100%;
+	height: 100%;
+}
+
+.main_td {
+	vertical-align: top;
+	text-align: center;
+	width: 100%;
+	border: 1px solid black;
+	padding: 10px;
+	height: 100%;
+}
+
+.title_td {
+	background: #0000FF;
+	color: #FFFFFF;
+	padding: 3px;
+}
+
+.result_table {
+	vertical-align: top;
+	padding: 3px;
+}
+
+.line_number_td {
+	cursor: pointer;
+}
+
+.line_number_selected {
+	background: #FFFF00 !important;
+}
+
+.code_number_selected {
+	background: #FF0000 !important;
+}
+
+.table_background {
+	background: #000000;
+}
+
+.table_cell {
+	background: #FFFFFF;
+	padding: 3px;
+}
+
+.options_div {
+	display: inline;
+	float: right;
+}
+
+.scrollcode {
+	margin: 0px auto;
+	width: 100%;
+	height: 200px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.scrollresult {
+	margin: 0px auto;
+	width: 100%;
+	height: 200px;
+	overflow: scroll;
+	overflow-x: scroll;
+}
+
+.input_prompt {
+	vertical-align: middle;
+	text-align: center;
+	padding: 5px;
+	background-color: #FFFFFF;
+	width: 200px;
+	height: 75px;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	border: 1px solid black;
+	visibility: hidden;
+}
+
+.input_prompt_vertical {
+	vertical-align: middle;
+}
+
+.help_window {
+	padding: 5px;
+	background-color: #FFFFFF;
+	width: 200px;
+	height: 300px;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	border: 1px solid black;
+	overflow: scroll;
+	overflow-x: hidden;
+	visibility: hidden;
+}
+
+.help_title {
+    text-align: center;
+	width: 100%;
+	color: #FF0000;
+	margin: 0px auto;
+}
+
+.blur {
+	position: fixed;
+	background-color: #000000;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 900;
+	background-color: #000000;
+	opacity: 0.7;
+	visibility: hidden;
+}

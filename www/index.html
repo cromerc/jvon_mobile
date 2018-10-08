@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app="JVON">
+<head>
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="msapplication-tap-highlight" content="no">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+
+    <title>JVON Movil</title>
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+
+    <script src="scripts/index.js"></script>
+
+    <script src="scripts/angular/angular.min.js"></script>
+    <script src="scripts/angular/angular-touch.min.js"></script>
+    <script src="scripts/angular/angular-sanitize.min.js"></script>
+
+    <script src="scripts/cryptojs/rollups/aes.js"></script>
+    <script src="scripts/cryptojs/rollups/hmac-sha512.js"></script>
+    <script src="scripts/cryptojs/rollups/sha512.js"></script>
+    <script src="scripts/cryptojs/components/mode-ecb-min.js"></script>
+    <script src="scripts/cryptojs/components/pad-zeropadding-min.js"></script>
+
+    <script src="scripts/values/code.js"></script>
+    <script src="scripts/values/english.js"></script>
+    <script src="scripts/values/spanish.js"></script>
+    <script src="scripts/jvon-angular.js"></script>
+    <script src="scripts/jvon-interpret.js"></script>
+
+    <link rel="stylesheet" href="css/index.css" />
+</head>
+<body ng-controller="JVONController" id="jvon" onload="initialize();">
+    <div ng-click="hide_help();" id="blur" class="blur"></div>
+
+    <div id="input_prompt" class="input_prompt">
+	<span class="input_prompt_vertical">
+	    {{strings.input_value}}
+	    <input autocomplete="off" type="text" name="rda" id="rda" />
+	    <input ng-click="rda_value_received();" type="button" value="Ingresar" />
+	</span>
+    </div>
+
+    <div id="help_window" class="help_window" ng-bind-html="strings.help_text"></div>
+
+    <div class="options_div"><input ng-click="show_help();" type="button" value="{{strings.help}}" /><select ng-change="change_language();" ng-model="language"><option value="0">{{strings.spanish}}</option><option value="1">{{strings.english}}</option></select></div>
+    <br />
+    <table class="main_table">
+	<tr>
+	    <td class="main_td">
+		{{strings.code}}<hr />
+		<div class="scrollcode">
+		    <table align="center" class="table_background">
+			<tr ng-repeat="(key, line) in code_lines">
+			    <td id="line1_{{key}}" ng-click="select_line(key, false);" class="table_cell line_number_td" >{{line.line}}</td>
+			    <td id="line2_{{key}}" class="table_cell"><select ng-model="line.command" ng-options="command.name for command in commands"></select></td>
+			    <td id="line3_{{key}}" class="table_cell"><input type="text" ng-model="line.value" /></td>
+			</tr>
+		    </table>
+		</div>
+		<hr />
+		<input ng-click="add_line();" id="add_line" type="button" value="{{strings.add_line}}" />
+		<input ng-click="insert_line();" id="insert_line" type="button" value="{{strings.insert_line}}" />
+		<input ng-click="delete_line();" id="delete_line" type="button" value="{{strings.delete_line}}" />
+		<input ng-click="clear_code();" id="clear_code" type="button" value="{{strings.clear_code}}" />
+	    </td></tr><tr>
+	    <td class="main_td">
+		{{strings.result}}
+		<hr />
+		<div class="scrollresult">
+		    <table align="center">
+			<tr>
+			    <td class="result_table">
+				<table align="center" class="table_background">
+				    <tr>
+					<td class="title_td">Ln</td>
+					<td class="title_td">Ac</td>
+					<td class="title_td">80</td>
+					<td class="title_td">81</td>
+					<td class="title_td">82</td>
+					<td class="title_td">83</td>
+					<td class="title_td">84</td>
+					<td class="title_td">85</td>
+					<td class="title_td">Wrt</td>
+				    </tr>
+				    <tr ng-repeat="result in results">
+					<td class="table_cell">{{result.line}}</td>
+					<td class="table_cell">{{result.ac}}</td>
+					<td class="table_cell">{{result.first}}</td>
+					<td class="table_cell">{{result.second}}</td>
+					<td class="table_cell">{{result.third}}</td>
+					<td class="table_cell">{{result.fourth}}</td>
+					<td class="table_cell">{{result.fifth}}</td>
+					<td class="table_cell">{{result.sixth}}</td>
+					<td class="table_cell">{{result.wrt}}</td>
+				    </tr>
+				</table>
+			    </td>
+			</tr>
+		    </table>
+		</div>
+		<hr />
+		<input ng-click="execute_code();" id="execute_code" type="button" value="{{strings.execute_code}}" />
+		<input ng-click="paused_code();" id="pause_code" type="button" value="{{strings.pause_code}}" />
+		<input ng-click="stop_code();" id="stop_code" type="button" value="{{strings.stop_code}}" />
+		{{strings.interval}}
+		<select ng-change="change_speed();" ng-model="speed">
+		    <option value="0">0</option>
+		    <option value="1">1</option>
+		    <option value="2">2</option>
+		    <option value="3">3</option>
+		    <option value="4">4</option>
+		    <option value="5">5</option>
+		</select>
+	    </td></tr><tr>
+            <td class="main_td">
+                {{strings.result}}
+                <hr />
+                <div class="scrollresult">
+                    <table align="center">
+                        <tr>
+                            <td class="result_table">
+                                <table align="center" class="table_background">
+                                    <tr>
+                                        <td class="title_td">{{strings.screen}}</td>
+                                    </tr>
+                                    <tr ng-repeat="line in screen">
+                                        <td class="table_cell">{{line.result}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+	</tr>
+    </table>
+</body>
+</html>
