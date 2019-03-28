@@ -21,8 +21,8 @@
             "cordova-plugin-splashscreen": {}
         },
         "platforms": [
-            "android",
-            "browser"
+            "browser",
+            "android"
         ]
     }
 }
